@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EnterbudgetComponent } from './enterbudget/enterbudget.component';
@@ -16,7 +15,6 @@ import { VisualizationComponent } from './visualization/visualization.component'
   declarations: [
     AppComponent,
     HomepageComponent,
-    LoginComponent,
     MenuComponent,
     DashboardComponent,
     EnterbudgetComponent,
