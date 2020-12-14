@@ -1,3 +1,17 @@
 <h1>Enter or View Expenses</h1>
+
 <div id=expenseTable></div>
-<button (click)='delexpense()'>Delete Selected</button>
+<button (click)='delExpense()'>Delete Selected</button>
+
+<p>Expense titles are derived from budget titles (a budget item must be created before the associated expense item)</p>
+<form id='enterExpense'>
+  <label for='expenseTitleInput'>Expense Title/Category: </label>
+  <select id='expenseTitleInput' name='expenseTitleInput' required='true' form='enterExpense'>
+    <option value='default'>Select a Title/Category</option>
+  </select>
+  <label for='expenseValueInput'>Expense Value: $</label>
+  <input type='number' id='expenseValueInput' name='expenseValueInput' required='true' form='enterExpense'><br>
+  <button type='reset' id='resetExpenseButton' name='resetExpenseButton'>Reset</button>
+  <button (click)='submitExpense()' id='submitExpenseButton' name='submitExpenseButton'>Add Expense Item</button>
+</form>
+<p class='err' id='enterExpenseError' name='enterExpenseError'></p>

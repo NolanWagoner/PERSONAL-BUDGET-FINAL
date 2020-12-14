@@ -28,7 +28,7 @@ export class EnterbudgetComponent implements AfterViewInit {
         this.dataSource.ids[i] = res[i].id;
         this.dataSource.titles[i] = res[i].title;
         this.dataSource.values[i] = res[i].budget;
-    }
+      }
       this.createTable();
     });
   }
@@ -83,7 +83,7 @@ export class EnterbudgetComponent implements AfterViewInit {
     tableDiv.appendChild(createdTable)
   }
 
-  delbudget(){
+  delBudget(){
     var table = (<HTMLTableElement>document.getElementById('budgetTableTable'));
     var needDeleted = [];
     for(var i = 1; i < (this.dataSource.ids.length + 1); i++){
@@ -91,7 +91,6 @@ export class EnterbudgetComponent implements AfterViewInit {
       var cellCheckbox = row.cells[2].firstChild as HTMLInputElement;
       if(cellCheckbox.checked){
         //Delete through backend
-        let params = new HttpParams();
         this.http.post('http://localhost:3000/delbudget', {
           "username": "admin",
           "id":cellCheckbox.id
@@ -102,6 +101,32 @@ export class EnterbudgetComponent implements AfterViewInit {
       }
     }
     //Update table by reloading the page
+    location.reload();
+  }
+
+  submitBudget(){
+    var budgetTitle = document.getElementById('budgetTitleInput') as HTMLInputElement;
+    var budgetValue = document.getElementById('budgetValueInput') as HTMLInputElement;
+    var errPara = document.getElementById('enterBudgetError') as HTMLParagraphElement;
+    //Validate Input
+    if(budgetTitle.value == ''){
+      console.error('Enter a value for Budget Title/Category before submitting');
+      errPara.innerHTML = 'Enter a value for Budget Title/Category before submitting';
+      return;
+    } else if(budgetValue.value == ''){
+      console.error('Enter a value for Budget Value before submitting');
+      errPara.innerHTML = 'Enter a value for Budget Value before submitting';
+      return;
+    }
+    //Add to database through backend
+    this.http.post('http://localhost:3000/postbudget', {
+      'username': "admin",
+      'title': budgetTitle.value,
+      'budget': budgetValue.value
+    })
+    .subscribe((res: any) => {
+      //Respond based on response code if needed here
+    });
     location.reload();
   }
 }

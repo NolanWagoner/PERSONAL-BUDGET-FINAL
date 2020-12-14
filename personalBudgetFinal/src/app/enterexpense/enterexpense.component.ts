@@ -11,7 +11,8 @@ export class EnterexpenseComponent implements AfterViewInit {
   public dataSource = {
     ids: [],
     titles: [],
-    values: []
+    values: [],
+    budgetTitles: []
   };
 
   constructor(private http: HttpClient) { }
@@ -27,8 +28,18 @@ export class EnterexpenseComponent implements AfterViewInit {
         this.dataSource.ids[i] = res[i].id;
         this.dataSource.titles[i] = res[i].title;
         this.dataSource.values[i] = res[i].expense;
-    }
+      }
+    });
+
+    //Query backend for budget titles
+    this.http.get('http://localhost:3000/getbudget', {params: params})
+    .subscribe((res: any) => {
+      //Update dataSource based on results
+      for (var i = 0; i < res.length; i++){
+        this.dataSource.budgetTitles[i] = res[i].title;
+      }
       this.createTable();
+      this.populateExpenseTitleDropdown();
     });
   }
 
@@ -82,7 +93,7 @@ export class EnterexpenseComponent implements AfterViewInit {
     tableDiv.appendChild(createdTable);
   }
 
-  delexpense(){
+  delExpense(){
     var table = (<HTMLTableElement>document.getElementById('expenseTableTable'));
     var needDeleted = [];
     for(var i = 1; i < (this.dataSource.ids.length + 1); i++){
@@ -102,5 +113,41 @@ export class EnterexpenseComponent implements AfterViewInit {
     }
     //Update table by reloading the page
     location.reload();
+  }
+
+  submitExpense(){
+    var expenseTitle = document.getElementById('expenseTitleInput') as HTMLInputElement;
+    var expenseValue = document.getElementById('expenseValueInput') as HTMLInputElement;
+    var errPara = document.getElementById('enterExpenseError') as HTMLParagraphElement;
+    //Validate Input
+    if(expenseTitle.value == '' || expenseTitle.value == 'default'){
+      console.error('Enter a value for Expense Title/Category before submitting');
+      errPara.innerHTML = 'Enter a value for Expense Title/Category before submitting';
+      return;
+    } else if(expenseValue.value == ''){
+      console.error('Enter a value for Expense Value before submitting');
+      errPara.innerHTML = 'Enter a value for Expense Value before submitting';
+      return;
+    }
+    //Add to database through backend
+    this.http.post('http://localhost:3000/postexpense', {
+      'username': "admin",
+      'title': expenseTitle.value,
+      'expense': expenseValue.value
+    })
+    .subscribe((res: any) => {
+      //Respond based on response code if needed here
+    });
+    location.reload();
+  }
+
+  populateExpenseTitleDropdown(){
+    for(var i = 0; i < this.dataSource.budgetTitles.length; i++){
+      var titleSelect = document.getElementById('expenseTitleInput') as HTMLInputElement;
+      var titleOption = document.createElement('option');
+      titleOption.value = this.dataSource.budgetTitles[i];
+      titleOption.innerHTML = this.dataSource.budgetTitles[i];
+      titleSelect.appendChild(titleOption);
+    }
   }
 }
