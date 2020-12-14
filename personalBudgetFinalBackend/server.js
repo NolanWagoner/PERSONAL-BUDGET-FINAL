@@ -2,11 +2,14 @@ const express = require('express');
 const mysql = require('mysql');
 
 const port = process.env.port || 3000;
+const cors = require('cors');
 const app = express();
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(cors());
 
 //Get the budget rows for the specified user
 app.get('/getbudget', async (req, res) => {
@@ -19,7 +22,7 @@ app.get('/getbudget', async (req, res) => {
     });
     connection.connect();
     //Create sql statement from req body
-    var sql = 'SELECT * FROM budget WHERE username="' + req.body.username + '"';
+    var sql = 'SELECT * FROM budget WHERE username="' + req.query.username + '"';
     console.log(sql + " will be executed");
     //Execute database action
     connection.query(sql, function (error, results, fields) {
@@ -40,7 +43,7 @@ app.get('/getexpense', async (req, res) => {
     });
     connection.connect();
     //Create sql statement from req body
-    var sql = 'SELECT * FROM expense WHERE username="' + req.body.username + '"';
+    var sql = 'SELECT * FROM expense WHERE username="' + req.query.username + '"';
     console.log(sql + " will be executed");
     //Execute database action
     connection.query(sql, function (error, results, fields) {
@@ -93,5 +96,5 @@ app.post('/postexpense', async (req, res) => {
 });
 
 app.listen(port, () =>{
-    console.log(`Server on port ${port}`);
+    console.log(`Backend served on port ${port}`);
 });
