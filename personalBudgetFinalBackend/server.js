@@ -64,7 +64,7 @@ app.post('/postbudget', async (req, res) => {
     });
     connection.connect();
     //Create sql statement from req body
-    var sql = 'INSERT INTO budget (username, title, budget) VALUES ("' + req.body.username + '", "' + req.body.title + '", ' + req.body.budget + ')'
+    var sql = 'INSERT INTO budget (username, title, budget) VALUES ("' + req.body.username + '", "' + req.body.title + '", ' + req.body.budget + ')';
     console.log(sql + " will be executed");
     //Execute database action
     connection.query(sql, function (error, results, fields) {
@@ -85,7 +85,49 @@ app.post('/postexpense', async (req, res) => {
     });
     connection.connect();
     //Create sql statement from req body
-    var sql = 'INSERT INTO expense (username, title, expense) VALUES ("' + req.body.username + '", "' + req.body.title + '", ' + req.body.expense + ')'
+    var sql = 'INSERT INTO expense (username, title, expense) VALUES ("' + req.body.username + '", "' + req.body.title + '", ' + req.body.expense + ')';
+    console.log(sql + " will be executed");
+    //Execute database action
+    connection.query(sql, function (error, results, fields) {
+        connection.end();
+        if (error) throw error;
+        res.json(results);
+    });
+});
+
+//Delete row from budget table based on user input
+app.post('/delbudget', async (req, res) => {
+    //Make database connection
+    var connection = mysql.createConnection({
+        host        : 'sql9.freemysqlhosting.net',
+        user        : 'sql9374804',
+        password    : 'faUfZtFVHZ',
+        database    : 'sql9374804'
+    });
+    connection.connect();
+    //Create sql statement from req body
+    var sql = 'DELETE FROM budget WHERE username="' + req.body.username + '" AND id="' + req.body.id + '"';
+    console.log(sql + " will be executed");
+    //Execute database action
+    connection.query(sql, function (error, results, fields) {
+        connection.end();
+        if (error) throw error;
+        res.json(results);
+    });
+});
+
+//Delete row from expense table based on user input
+app.post('/delexpense', async (req, res) => {
+    //Make database connection
+    var connection = mysql.createConnection({
+        host        : 'sql9.freemysqlhosting.net',
+        user        : 'sql9374804',
+        password    : 'faUfZtFVHZ',
+        database    : 'sql9374804'
+    });
+    connection.connect();
+    //Create sql statement from req body
+    var sql = 'DELETE FROM expense WHERE username="' + req.body.username + '" AND id="' + req.body.id + '"';
     console.log(sql + " will be executed");
     //Execute database action
     connection.query(sql, function (error, results, fields) {
