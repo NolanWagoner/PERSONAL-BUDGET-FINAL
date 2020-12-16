@@ -11,6 +11,7 @@ import { EnterbudgetComponent } from './enterbudget/enterbudget.component';
 import { EnterexpenseComponent } from './enterexpense/enterexpense.component';
 import { FooterComponent } from './footer/footer.component';
 import { VisualizationComponent } from './visualization/visualization.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { VisualizationComponent } from './visualization/visualization.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

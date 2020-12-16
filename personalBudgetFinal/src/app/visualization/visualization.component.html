@@ -1,1 +1,45 @@
-<p>visualization works!</p>
+<h2>Visualization</h2>
+
+<div class='visualElement'>
+  <div>
+    <div style="display: block">
+      <canvas baseChart
+        [datasets]="radarChartData"
+        [options]="radarChartOptions"
+        [labels]="radarChartLabels"
+        [chartType]="radarChartType"
+        [colors]="radarChartColors">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div class='visualElement'>
+  <div>
+    <div style="display: block">
+      <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+        [colors]="barChartColors">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div class='visualElement'>
+  <div>
+    <div class="chart">
+      <canvas baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [colors]="pieChartColors"
+        [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </div>
+</div>
