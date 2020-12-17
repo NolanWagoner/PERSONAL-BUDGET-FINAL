@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-enterexpense',
@@ -19,9 +19,9 @@ export class EnterexpenseComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     //Query backend
-    let params = new HttpParams();
-    params = params.append('username', 'admin');
-    this.http.get('http://localhost:3000/getexpense', {params: params})
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
+    this.http.get('http://localhost:3000/getexpense', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -32,7 +32,7 @@ export class EnterexpenseComponent implements AfterViewInit {
     });
 
     //Query backend for budget titles
-    this.http.get('http://localhost:3000/getbudget', {params: params})
+    this.http.get('http://localhost:3000/getbudget', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -101,11 +101,11 @@ export class EnterexpenseComponent implements AfterViewInit {
       var cellCheckbox = row.cells[2].firstChild as HTMLInputElement;
       if(cellCheckbox.checked){
         //Delete through backend
-        let params = new HttpParams();
+        let headers = new HttpHeaders();
+        headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
         this.http.post('http://localhost:3000/delexpense', {
-          "username": "admin",
           "id":cellCheckbox.id
-        })
+        }, {headers: headers})
         .subscribe((res: any) => {
           //Respond based on response code if needed here
         });
@@ -130,11 +130,12 @@ export class EnterexpenseComponent implements AfterViewInit {
       return;
     }
     //Add to database through backend
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
     this.http.post('http://localhost:3000/postexpense', {
-      'username': "admin",
       'title': expenseTitle.value,
       'expense': expenseValue.value
-    })
+    }, {headers: headers})
     .subscribe((res: any) => {
       //Respond based on response code if needed here
     });

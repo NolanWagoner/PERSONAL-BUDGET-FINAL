@@ -1,2 +1,5 @@
-<a [routerLink] = "['']">Homepage</a>
-<a [routerLink] = "['/dashboard']">Dashboard</a>
+<nav>
+  <a [routerLink] = "['']">Homepage</a>
+  <a [routerLink] = "['/dashboard']" *ngIf="menuAuth.loggedIn">Dashboard</a>
+  <a (click)='menuAuth.logout()' *ngIf="menuAuth.loggedIn">Logout</a>
+</nav>

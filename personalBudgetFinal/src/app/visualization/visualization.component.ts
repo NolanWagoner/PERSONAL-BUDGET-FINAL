@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ChartDataSets, ChartOptions, ChartType, RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 
@@ -22,9 +22,9 @@ export class VisualizationComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     //Query backend for budget data
-    let params = new HttpParams();
-    params = params.append('username', 'admin');
-    this.http.get('http://localhost:3000/getbudget', {params: params})
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
+    this.http.get('http://localhost:3000/getbudget', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -33,7 +33,7 @@ export class VisualizationComponent implements AfterViewInit {
       }
     });
     //Query backend for expense data
-    this.http.get('http://localhost:3000/getexpense', {params: params})
+    this.http.get('http://localhost:3000/getexpense', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-enterbudget',
@@ -19,9 +19,9 @@ export class EnterbudgetComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     //Query backend
-    let params = new HttpParams();
-    params = params.append('username', 'admin');
-    this.http.get('http://localhost:3000/getbudget', {params: params})
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
+    this.http.get('http://localhost:3000/getbudget', { headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -91,10 +91,9 @@ export class EnterbudgetComponent implements AfterViewInit {
       var cellCheckbox = row.cells[2].firstChild as HTMLInputElement;
       if(cellCheckbox.checked){
         //Delete through backend
-        this.http.post('http://localhost:3000/delbudget', {
-          "username": "admin",
-          "id":cellCheckbox.id
-        })
+        let headers = new HttpHeaders();
+        headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
+        this.http.post('http://localhost:3000/delbudget', { "id":cellCheckbox.id }, {headers: headers})
         .subscribe((res: any) => {
           //Respond based on response code if needed here
         });
@@ -119,11 +118,12 @@ export class EnterbudgetComponent implements AfterViewInit {
       return;
     }
     //Add to database through backend
+    let headers = new HttpHeaders();
+    headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
     this.http.post('http://localhost:3000/postbudget', {
-      'username': "admin",
       'title': budgetTitle.value,
       'budget': budgetValue.value
-    })
+    }, {headers: headers})
     .subscribe((res: any) => {
       //Respond based on response code if needed here
     });
