@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cors());
 
-app.use(expressJwt({secret: '-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20DsTVLiVLXMIlPNzZlE5bKN\n5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQJAfRyEHWnKJYuAKUIosIOI\n8o1nN15D8M0Sajvrz/doAAHrKheaO4kMJwZDRIXEByhAbLLb7AUZK5l9gzJY64uk\nIQIhALz4r2RyI+NW1qG0HA4mdRZCWi1Jaj8mdnYfIjHo9KVXAiEArxPJuGvm8JPa\npKt15WC1LCm2n+nRX/s3cRAIbpLtZXECIFkcC9kZ2cKCWIO4IuKpT91HPK7OR8Ov\np3zcAYv3hiXRAiA1APekJr6u/QRHsEUsIYAYE7TfawlhVovtZd43o7HNcQIhALi6\nyG+rAYLiTiPnsz0cCWKst2cj6s71OwzZNvYkfanc\n-----END RSA PRIVATE KEY-----', algorithms: ['RS256']}).unless({path: ['/auth']}));
+app.use(expressJwt({secret: '-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20DsTVLiVLXMIlPNzZlE5bKN\n5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQJAfRyEHWnKJYuAKUIosIOI\n8o1nN15D8M0Sajvrz/doAAHrKheaO4kMJwZDRIXEByhAbLLb7AUZK5l9gzJY64uk\nIQIhALz4r2RyI+NW1qG0HA4mdRZCWi1Jaj8mdnYfIjHo9KVXAiEArxPJuGvm8JPa\npKt15WC1LCm2n+nRX/s3cRAIbpLtZXECIFkcC9kZ2cKCWIO4IuKpT91HPK7OR8Ov\np3zcAYv3hiXRAiA1APekJr6u/QRHsEUsIYAYE7TfawlhVovtZd43o7HNcQIhALi6\nyG+rAYLiTiPnsz0cCWKst2cj6s71OwzZNvYkfanc\n-----END RSA PRIVATE KEY-----', algorithms: ['RS256']}).unless({path: ['/auth', '/newuser']}));
 
 //Auth endpoint for sending uname and pass and receiving response of token
 app.post('/auth', function(req, res) {
@@ -43,6 +43,27 @@ app.post('/auth', function(req, res) {
         res.send({token});
     });
   });
+
+//Auth endpoint for creating new user
+app.post('/newuser', function(req, res) {
+    //Make database connection
+    var connection = mysql.createConnection({
+        host        : 'sql9.freemysqlhosting.net',
+        user        : 'sql9374804',
+        password    : 'faUfZtFVHZ',
+        database    : 'sql9374804'
+    });
+    connection.connect();
+    //Create sql statement from req body
+    var sql = 'INSERT INTO user (username, password) VALUES ("' + req.body.username + '", "' + req.body.password + '")';
+    console.log(sql + " will be executed");
+    //Execute database action
+    connection.query(sql, function (error, results, fields) {
+        connection.end();
+        if (error) throw error;
+        res.json(results);
+    });
+});
 
 //Get the budget rows for the specified user
 app.get('/getbudget', async (req, res) => {

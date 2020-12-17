@@ -1,4 +1,7 @@
-<h2>Login</h2>
+<h2>Register</h2>
+
+<p class='good' id='registerGood' name='registerGood'></p>
+
 <h4 *ngIf='error' class='err'>{{error}}</h4>
 <form (ngSubmit)='submit()' *ngIf='!loginAuth.loggedIn'>
     <label for='username'>Username</label>
@@ -7,7 +10,7 @@
     <label for='password'>Password</label>
     <input type='password' name='password' [(ngModel)]='password'>
 
-    <button type='submit'>Login</button>
+    <button type='submit'>Create Account</button>
 </form>
 
 <p *ngIf='loginAuth.loggedIn'>Already Logged In</p>
