@@ -57,7 +57,8 @@ app.post('/auth', function(req, res) {
         connection.end();
         if (error) throw error;
 
-        if(!results[0] || req.body.username != results[0].username || req.body.password != results[0].password) return res.sendStatus(401);
+        if(!results[0] || req.body.username != results[0].username || req.body.password != results[0].password) {return res.sendStatus(401)}
+        else{res.statusCode = 200;}
         
         var token = jwt.sign({userID: results[0].username}, '-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20DsTVLiVLXMIlPNzZlE5bKN\n5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQJAfRyEHWnKJYuAKUIosIOI\n8o1nN15D8M0Sajvrz/doAAHrKheaO4kMJwZDRIXEByhAbLLb7AUZK5l9gzJY64uk\nIQIhALz4r2RyI+NW1qG0HA4mdRZCWi1Jaj8mdnYfIjHo9KVXAiEArxPJuGvm8JPa\npKt15WC1LCm2n+nRX/s3cRAIbpLtZXECIFkcC9kZ2cKCWIO4IuKpT91HPK7OR8Ov\np3zcAYv3hiXRAiA1APekJr6u/QRHsEUsIYAYE7TfawlhVovtZd43o7HNcQIhALi6\nyG+rAYLiTiPnsz0cCWKst2cj6s71OwzZNvYkfanc\n-----END RSA PRIVATE KEY-----', {algorithm: 'RS256', expiresIn: '2h'});
 
@@ -96,6 +97,7 @@ app.post('/newuser', function(req, res) {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 201;
         res.json(results);
     });
 });
@@ -117,6 +119,7 @@ app.get('/getbudget', async (req, res) => {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 200;
         res.json(results);
     });
 });
@@ -138,6 +141,7 @@ app.get('/getexpense', async (req, res) => {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 200;
         res.json(results);
     });
 });
@@ -171,6 +175,7 @@ app.post('/postbudget', async (req, res) => {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 201;
         res.json(results);
     });
 });
@@ -204,6 +209,7 @@ app.post('/postexpense', async (req, res) => {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 201;
         res.json(results);
     });
 });
@@ -237,6 +243,7 @@ app.post('/delbudget', async (req, res) => {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 200;
         res.json(results);
     });
 });
@@ -270,6 +277,7 @@ app.post('/delexpense', async (req, res) => {
     connection.query(sql, function (error, results, fields) {
         connection.end();
         if (error) throw error;
+        res.statusCode = 200;
         res.json(results);
     });
 });
