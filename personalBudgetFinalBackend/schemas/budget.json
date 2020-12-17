@@ -1,0 +1,25 @@
+{
+    "$id": "budget.json",
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+      "title": {
+        "title": "title",
+        "type": "string",
+        "description": "Title for budget that will be sent to database",
+        "maxLength": 120,
+        "minLength": 1
+      },
+      "budget": {
+        "title": "budget",
+        "description": "Budget value that will be sent to database",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 99999999999999999999
+      }
+    },
+    "required": [
+      "title",
+      "budget"
+    ]
+  }
