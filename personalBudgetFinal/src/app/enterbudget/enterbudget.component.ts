@@ -93,9 +93,8 @@ export class EnterbudgetComponent implements AfterViewInit {
         //Delete through backend
         let headers = new HttpHeaders();
         headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
-        this.http.post('http://localhost:3000/delbudget', { "id":cellCheckbox.id }, {headers: headers})
+        this.http.post('http://localhost:3000/delbudget', { "id": parseInt(cellCheckbox.id) }, {headers: headers})
         .subscribe((res: any) => {
-          //Respond based on response code if needed here
         });
       }
     }
@@ -116,16 +115,35 @@ export class EnterbudgetComponent implements AfterViewInit {
       console.error('Enter a value for Budget Value before submitting');
       errPara.innerHTML = 'Enter a value for Budget Value before submitting';
       return;
+    } else if(this.dataSource.titles.indexOf(budgetTitle.value) != -1){
+      console.error('A budget entry with that title already exists');
+      errPara.innerHTML = 'A budget entry with that title already exists';
+      return;
+    } else if(budgetTitle.value.length < 1){
+      console.error('Budget title too short');
+      errPara.innerHTML = 'Please enter a budget title longer than one character';
+      return;
+    } else if(budgetTitle.value.length > 25){
+      console.error('Budget title too long');
+      errPara.innerHTML = 'Please enter a budget title shorter than 120 characters';
+      return;
+    } else if(parseFloat(budgetValue.value) < 0){
+      console.error('Budget value cannot be less than 0');
+      errPara.innerHTML = 'Please enter a budget title that is greater than 0';
+      return;
+    } else if(parseFloat(budgetValue.value) > 99999999999999999999){
+      console.error('Budget value cannot be more than 20 digits');
+      errPara.innerHTML = 'Please enter a budget value that is less than 20 digits long';
+      return;
     }
     //Add to database through backend
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
     this.http.post('http://localhost:3000/postbudget', {
       'title': budgetTitle.value,
-      'budget': budgetValue.value
+      'budget': parseFloat(budgetValue.value)
     }, {headers: headers})
     .subscribe((res: any) => {
-      //Respond based on response code if needed here
     });
     location.reload();
   }

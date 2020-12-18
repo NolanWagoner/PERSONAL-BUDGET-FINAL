@@ -7,11 +7,11 @@
         "title": "title",
         "type": "string",
         "description": "Title for budget that will be sent to database",
-        "maxLength": 120,
+        "maxLength": 25,
         "minLength": 1
       },
       "budget": {
-        "title": "budget",
+        "title": "expense",
         "description": "Budget value that will be sent to database",
         "type": "number",
         "minimum": 0,

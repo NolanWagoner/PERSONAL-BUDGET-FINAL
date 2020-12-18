@@ -17,18 +17,59 @@ export class RegisterComponent {
   constructor(public loginAuth: AuthService, private http: HttpClient) { }
 
   public submit() {
-    this.http.post('http://localhost:3000/newuser', {
-      'username': this.username,
-      'password': this.password
+    var errPara = document.getElementById('registerError') as HTMLParagraphElement;
+    //Validate Input
+    if(this.username == ''){
+      console.error('Enter a value for username before submitting');
+      errPara.innerHTML = 'Enter a value for username before submitting';
+      return;
+    } else if(this.password == ''){
+      console.error('Enter a value for password before submitting');
+      errPara.innerHTML = 'Enter a value for password before submitting';
+      return;
+    } else if(this.username.length < 5){
+      console.error('Username must be 5 or more characters long');
+      errPara.innerHTML = 'Username must be 5 or more characters long';
+      return;
+    } else if(this.username.length > 120){
+      console.error('Username too long');
+      errPara.innerHTML = 'Username must be shorter than 120 characters';
+      return;
+    } else if(this.password.length < 5){
+      console.error('Password must be 5 or more characters long');
+      errPara.innerHTML = 'Password must be 5 or more characters long';
+      return;
+    } else if(this.password.length > 120){
+      console.error('Password too long');
+      errPara.innerHTML = 'Password must be shorter than 120 characters';
+      return;
+    }
+    //Check if username exists on backend
+    var userExists;
+    this.http.post('http://localhost:3000/isauser', {
+      'username': this.username
     })
     .subscribe((res: any) => {
-      //error handling if needed
+      if(res.isauser){
+        console.error('Username is taken');
+        errPara.innerHTML = 'An account already exists under that username';
+        return;
+      } else{
+        //Post to backend
+        this.http.post('http://localhost:3000/newuser', {
+          'username': this.username,
+          'password': this.password
+        })
+        .subscribe((res: any) => {
+          //Clear form
+          this.username = '';
+          this.password = '';
+          //Success message
+          errPara.innerHTML = '';
+          var registerGood = document.getElementById('registerGood') as HTMLParagraphElement;
+          registerGood.innerHTML = 'New user has been added';
+        });
+      }
     });
-    //Clear form
-    this.username = '';
-    this.password = '';
-    //Success message
-    var registerGood = document.getElementById('registerGood') as HTMLParagraphElement;
-    registerGood.innerHTML = 'New user has been added';
   }
 }

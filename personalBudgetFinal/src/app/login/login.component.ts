@@ -17,10 +17,21 @@ export class LoginComponent {
   constructor(public loginAuth: AuthService, private router: Router) { }
 
   public submit() {
+    var errPara = document.getElementById('loginError') as HTMLParagraphElement;
+    //Validate input
+    if(this.username == ''){
+      console.error('No value for username');
+      errPara.innerHTML = 'Enter a value for username before submitting';
+      return;
+    } else if(this.password == ''){
+      console.error('No value for password');
+      errPara.innerHTML = 'Enter a value for password before submitting';
+      return;
+    }
     this.loginAuth.login(this.username, this.password)
       .pipe(first()).subscribe(
         result => this.router.navigate(['dashboard']),
-        err => this.error = 'Authentication has failed, please try again'
+        err => errPara.innerHTML = 'Authentication has failed, please try again (username or password may be incorrect)'
       );
   }
 }

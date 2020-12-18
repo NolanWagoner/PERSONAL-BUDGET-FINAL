@@ -4,13 +4,15 @@
 
 <h4 *ngIf='error' class='err'>{{error}}</h4>
 <form (ngSubmit)='submit()' *ngIf='!loginAuth.loggedIn'>
-    <label for='username'>Username</label>
-    <input type='text' name='username' [(ngModel)]='username'>
+    <label for='username'>Username: </label>
+    <input type='text' name='username' [(ngModel)]='username'><br><br>
 
-    <label for='password'>Password</label>
-    <input type='password' name='password' [(ngModel)]='password'>
+    <label for='password'>Password: </label>
+    <input type='password' name='password' [(ngModel)]='password'><br><br>
 
-    <button type='submit'>Create Account</button>
+    <button type='submit'>Create Account</button><br><br>
 </form>
+
+<p class='err' id='registerError' name='registerError'></p>
 
 <p *ngIf='loginAuth.loggedIn'>Already Logged In</p>

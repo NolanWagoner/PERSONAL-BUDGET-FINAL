@@ -3,7 +3,6 @@
 <div id=expenseTable></div>
 <button (click)='delExpense()'>Delete Selected</button>
 
-<p>Expense titles are derived from budget titles (a budget item must be created before the associated expense item)</p>
 <form id='enterExpense'>
   <label for='expenseTitleInput'>Expense Title/Category: </label>
   <select id='expenseTitleInput' name='expenseTitleInput' required='true' form='enterExpense'>
@@ -15,3 +14,5 @@
   <button (click)='submitExpense()' id='submitExpenseButton' name='submitExpenseButton'>Add Expense Item</button>
 </form>
 <p class='err' id='enterExpenseError' name='enterExpenseError'></p>
+
+<p>*Expense titles are derived from budget titles (a budget item must be created before the associated expense item)</p>

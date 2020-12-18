@@ -104,10 +104,9 @@ export class EnterexpenseComponent implements AfterViewInit {
         let headers = new HttpHeaders();
         headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
         this.http.post('http://localhost:3000/delexpense', {
-          "id":cellCheckbox.id
+          "id": parseInt(cellCheckbox.id)
         }, {headers: headers})
         .subscribe((res: any) => {
-          //Respond based on response code if needed here
         });
       }
     }
@@ -128,16 +127,27 @@ export class EnterexpenseComponent implements AfterViewInit {
       console.error('Enter a value for Expense Value before submitting');
       errPara.innerHTML = 'Enter a value for Expense Value before submitting';
       return;
+    } else if(this.dataSource.titles.indexOf(expenseTitle.value) != -1){
+      console.error('An expense entry with that title already exists');
+      errPara.innerHTML = 'An expense entry with that title already exists';
+      return;
+    } else if(parseFloat(expenseValue.value) < 0){
+      console.error('Expense value cannot be less than 0');
+      errPara.innerHTML = 'Please enter a expense title that is greater than 0';
+      return;
+    } else if(parseFloat(expenseValue.value) > 99999999999999999999){
+      console.error('Expense value cannot be more than 20 digits');
+      errPara.innerHTML = 'Please enter a expense value that is less than 20 digits long';
+      return;
     }
     //Add to database through backend
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
     this.http.post('http://localhost:3000/postexpense', {
       'title': expenseTitle.value,
-      'expense': expenseValue.value
+      'expense': parseFloat(expenseValue.value)
     }, {headers: headers})
     .subscribe((res: any) => {
-      //Respond based on response code if needed here
     });
     location.reload();
   }

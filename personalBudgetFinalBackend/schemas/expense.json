@@ -7,7 +7,7 @@
         "title": "title",
         "type": "string",
         "description": "Title for expense that will be sent to database",
-        "maxLength": 120,
+        "maxLength": 25,
         "minLength": 1
       },
       "expense": {

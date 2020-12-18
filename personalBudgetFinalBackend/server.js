@@ -20,12 +20,13 @@ const userSchema = JSON.parse(fs.readFileSync('./schemas/user.json'));
 const budgetSchema = JSON.parse(fs.readFileSync('./schemas/budget.json'));
 const expenseSchema = JSON.parse(fs.readFileSync('./schemas/expense.json'));
 const delBESchema = JSON.parse(fs.readFileSync('./schemas/delBE.json'));
+const usernameSchema = JSON.parse(fs.readFileSync('./schemas/username.json'));
 
 app.use(express.json());
 
 app.use(cors());
 
-app.use(expressJwt({secret: '-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20DsTVLiVLXMIlPNzZlE5bKN\n5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQJAfRyEHWnKJYuAKUIosIOI\n8o1nN15D8M0Sajvrz/doAAHrKheaO4kMJwZDRIXEByhAbLLb7AUZK5l9gzJY64uk\nIQIhALz4r2RyI+NW1qG0HA4mdRZCWi1Jaj8mdnYfIjHo9KVXAiEArxPJuGvm8JPa\npKt15WC1LCm2n+nRX/s3cRAIbpLtZXECIFkcC9kZ2cKCWIO4IuKpT91HPK7OR8Ov\np3zcAYv3hiXRAiA1APekJr6u/QRHsEUsIYAYE7TfawlhVovtZd43o7HNcQIhALi6\nyG+rAYLiTiPnsz0cCWKst2cj6s71OwzZNvYkfanc\n-----END RSA PRIVATE KEY-----', algorithms: ['RS256']}).unless({path: ['/auth', '/newuser']}));
+app.use(expressJwt({secret: '-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20DsTVLiVLXMIlPNzZlE5bKN\n5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQJAfRyEHWnKJYuAKUIosIOI\n8o1nN15D8M0Sajvrz/doAAHrKheaO4kMJwZDRIXEByhAbLLb7AUZK5l9gzJY64uk\nIQIhALz4r2RyI+NW1qG0HA4mdRZCWi1Jaj8mdnYfIjHo9KVXAiEArxPJuGvm8JPa\npKt15WC1LCm2n+nRX/s3cRAIbpLtZXECIFkcC9kZ2cKCWIO4IuKpT91HPK7OR8Ov\np3zcAYv3hiXRAiA1APekJr6u/QRHsEUsIYAYE7TfawlhVovtZd43o7HNcQIhALi6\nyG+rAYLiTiPnsz0cCWKst2cj6s71OwzZNvYkfanc\n-----END RSA PRIVATE KEY-----', algorithms: ['RS256']}).unless({path: ['/auth', '/newuser', '/isauser']}));
 
 //Auth endpoint for sending uname and pass and receiving response of token
 app.post('/auth', function(req, res) {
@@ -279,6 +280,48 @@ app.post('/delexpense', async (req, res) => {
         if (error) throw error;
         res.statusCode = 200;
         res.json(results);
+    });
+});
+
+//Does the user exist
+app.post('/isauser', async (req, res) => {
+    //Validate
+    const updateData = req.body;
+    try {
+        const valid = ajv.validate(usernameSchema, updateData);
+        if (!valid) {
+        res.status(400).json({ errors: ajv.errors });
+        return;
+        }
+    } catch (ex) {
+        res.status(500);
+        return;
+    }
+    //Make database connection
+    var connection = mysql.createConnection({
+        host        : 'sql9.freemysqlhosting.net',
+        user        : 'sql9374804',
+        password    : 'faUfZtFVHZ',
+        database    : 'sql9374804'
+    });
+    connection.connect();
+    //Create sql statement from req body
+    var sql = 'SELECT * FROM user WHERE username="' + req.body.username + '"';
+    console.log(sql + " will be executed");
+    //Execute database action
+    connection.query(sql, function (error, results, fields) {
+        connection.end();
+        if (error) throw error;
+
+        //Send code 200 if name exists and 
+        if(!results[0] || req.body.username != results[0].username) {
+            res.statusCode = 200;
+            res.json({'isauser': false});
+        }
+        else{
+            res.statusCode = 200;
+            res.json({'isauser': true});
+        }
     });
 });
 
