@@ -21,7 +21,7 @@ export class EnterexpenseComponent implements AfterViewInit {
     //Query backend
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
-    this.http.get('http://localhost:3000/getexpense', {headers: headers})
+    this.http.get('http://64.225.61.205:3000/getexpense', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -32,7 +32,7 @@ export class EnterexpenseComponent implements AfterViewInit {
     });
 
     //Query backend for budget titles
-    this.http.get('http://localhost:3000/getbudget', {headers: headers})
+    this.http.get('http://64.225.61.205:3000/getbudget', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -112,15 +112,15 @@ export class EnterexpenseComponent implements AfterViewInit {
         //Delete through backend
         let headers = new HttpHeaders();
         headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
-        this.http.post('http://localhost:3000/delexpense', {
+        this.http.post('http://64.225.61.205:3000/delexpense', {
           "id": parseInt(cellCheckbox.id)
         }, {headers: headers})
         .subscribe((res: any) => {
+          //Update table by reloading the page
+          location.reload();
         });
       }
     }
-    //Update table by reloading the page
-    location.reload();
   }
 
   submitExpense(){
@@ -152,13 +152,13 @@ export class EnterexpenseComponent implements AfterViewInit {
     //Add to database through backend
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
-    this.http.post('http://localhost:3000/postexpense', {
+    this.http.post('http://64.225.61.205:3000/postexpense', {
       'title': expenseTitle.value,
       'expense': parseFloat(expenseValue.value)
     }, {headers: headers})
     .subscribe((res: any) => {
+      location.reload();
     });
-    location.reload();
   }
 
   populateExpenseTitleDropdown(){

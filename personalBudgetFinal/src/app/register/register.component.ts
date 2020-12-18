@@ -46,7 +46,7 @@ export class RegisterComponent {
     }
     //Check if username exists on backend
     var userExists;
-    this.http.post('http://localhost:3000/isauser', {
+    this.http.post('http://64.225.61.205:3000/isauser', {
       'username': this.username
     })
     .subscribe((res: any) => {
@@ -56,7 +56,7 @@ export class RegisterComponent {
         return;
       } else{
         //Post to backend
-        this.http.post('http://localhost:3000/newuser', {
+        this.http.post('http://64.225.61.205:3000/newuser', {
           'username': this.username,
           'password': this.password
         })

@@ -27,7 +27,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(expressJwt({secret: '-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20DsTVLiVLXMIlPNzZlE5bKN\n5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQJAfRyEHWnKJYuAKUIosIOI\n8o1nN15D8M0Sajvrz/doAAHrKheaO4kMJwZDRIXEByhAbLLb7AUZK5l9gzJY64uk\nIQIhALz4r2RyI+NW1qG0HA4mdRZCWi1Jaj8mdnYfIjHo9KVXAiEArxPJuGvm8JPa\npKt15WC1LCm2n+nRX/s3cRAIbpLtZXECIFkcC9kZ2cKCWIO4IuKpT91HPK7OR8Ov\np3zcAYv3hiXRAiA1APekJr6u/QRHsEUsIYAYE7TfawlhVovtZd43o7HNcQIhALi6\nyG+rAYLiTiPnsz0cCWKst2cj6s71OwzZNvYkfanc\n-----END RSA PRIVATE KEY-----', algorithms: ['RS256']}).unless({path: ['/auth', '/newuser', '/isauser']}));
+app.use(expressJwt({secret: '-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIE8m0ISlVk1TAjOPouJ+W5vYYZZ20Ds\nTVLiVLXMIlPNzZlE5bKN5jEIONjfyuIaUMY+qnAtb3LoBgW9GwjDTmcCAwEAAQ==\n-----END PUBLIC KEY-----', algorithms: ['RS256']}).unless({path: ['/auth', '/newuser', '/isauser']}));
 
 //Auth endpoint for sending uname and pass and receiving response of token
 app.post('/auth', function(req, res) {

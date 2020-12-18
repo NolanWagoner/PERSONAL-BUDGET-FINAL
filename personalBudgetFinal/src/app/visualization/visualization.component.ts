@@ -24,7 +24,7 @@ export class VisualizationComponent implements AfterViewInit {
     //Query backend for budget data
     let headers = new HttpHeaders();
     headers = headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
-    this.http.get('http://localhost:3000/getbudget', {headers: headers})
+    this.http.get('http://64.225.61.205:3000/getbudget', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
@@ -33,7 +33,7 @@ export class VisualizationComponent implements AfterViewInit {
       }
     });
     //Query backend for expense data
-    this.http.get('http://localhost:3000/getexpense', {headers: headers})
+    this.http.get('http://64.225.61.205:3000/getexpense', {headers: headers})
     .subscribe((res: any) => {
       //Update dataSource based on results
       for (var i = 0; i < res.length; i++){
