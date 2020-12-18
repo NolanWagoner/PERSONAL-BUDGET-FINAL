@@ -69,6 +69,15 @@ export class EnterexpenseComponent implements AfterViewInit {
     //Create table body
     for (var i = 0; i < this.dataSource.titles.length; i++) {
       var tr = document.createElement('tr');
+      if((i%2) == 0){
+        var evenRowAttr = document.createAttribute('class');
+        evenRowAttr.value = 'even-row';
+        tr.setAttributeNode(evenRowAttr);
+      } else{
+        var oddRowAttr = document.createAttribute('class');
+        oddRowAttr.value = 'odd-row';
+        tr.setAttributeNode(oddRowAttr);
+      }
       for (var j = 0; j < 3; j++) {
         var td = document.createElement('td');
         if(j == 0){
@@ -154,11 +163,13 @@ export class EnterexpenseComponent implements AfterViewInit {
 
   populateExpenseTitleDropdown(){
     for(var i = 0; i < this.dataSource.budgetTitles.length; i++){
-      var titleSelect = document.getElementById('expenseTitleInput') as HTMLInputElement;
-      var titleOption = document.createElement('option');
-      titleOption.value = this.dataSource.budgetTitles[i];
-      titleOption.innerHTML = this.dataSource.budgetTitles[i];
-      titleSelect.appendChild(titleOption);
+      if(this.dataSource.titles.indexOf(this.dataSource.budgetTitles[i]) == -1){
+        var titleSelect = document.getElementById('expenseTitleInput') as HTMLInputElement;
+        var titleOption = document.createElement('option');
+        titleOption.value = this.dataSource.budgetTitles[i];
+        titleOption.innerHTML = this.dataSource.budgetTitles[i];
+        titleSelect.appendChild(titleOption);
+      }
     }
   }
 }

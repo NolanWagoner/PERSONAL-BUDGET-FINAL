@@ -1,18 +1,21 @@
-<h2>Enter or View Expenses</h2>
+<h2>Expenses</h2>
 
 <div id=expenseTable></div>
-<button (click)='delExpense()'>Delete Selected</button>
+<button data-message='Delete checked expense' (click)='delExpense()'>Delete Selected</button><br><br>
 
 <form id='enterExpense'>
-  <label for='expenseTitleInput'>Expense Title/Category: </label>
+  <label for='expenseTitleInput'>Expense Title/Category</label><br>
   <select id='expenseTitleInput' name='expenseTitleInput' required='true' form='enterExpense'>
     <option value='default'>Select a Title/Category</option>
-  </select>
-  <label for='expenseValueInput'>Expense Value: $</label>
-  <input type='number' id='expenseValueInput' name='expenseValueInput' required='true' form='enterExpense'><br>
-  <button type='reset' id='resetExpenseButton' name='resetExpenseButton'>Reset</button>
-  <button (click)='submitExpense()' id='submitExpenseButton' name='submitExpenseButton'>Add Expense Item</button>
+  </select><br><br>
+  <label for='expenseValueInput'>Expense Value (in dollars)</label><br>
+  <input type='number' id='expenseValueInput' name='expenseValueInput' required='true' form='enterExpense'><br><br>
+  <button data-message='Reset expense form' type='reset' id='resetExpenseButton' name='resetExpenseButton'>Reset</button>
+  <button data-message='Submit expense' (click)='submitExpense()' id='submitExpenseButton' name='submitExpenseButton'>Add Expense Item</button>
 </form>
 <p class='err' id='enterExpenseError' name='enterExpenseError'></p>
 
-<p>*Expense titles are derived from budget titles (a budget item must be created before the associated expense item)</p>
+<p>
+  *Expense titles are derived from budget titles<br>
+  (a budget item must be created before the associated expense item)
+</p>

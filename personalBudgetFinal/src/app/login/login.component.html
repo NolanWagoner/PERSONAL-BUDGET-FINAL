@@ -1,14 +1,16 @@
 <h2>Login</h2>
 <form (ngSubmit)='submit()' *ngIf='!loginAuth.loggedIn'>
-    <label for='username'>Username: </label>
+    <label for='username'>Username</label><br>
     <input type='text' name='username' [(ngModel)]='username'><br><br>
 
-    <label for='password'>Password: </label>
-    <input type='password' name='password' [(ngModel)]='password'><br><br>
+    <label for='password'>Password</label><br>
+    <input type='password' name='password' [(ngModel)]='password'>
 
-    <button type='submit'>Login</button><br><br>
+    <p>*Input is case sensitive</p>
+
+    <button data-message='Login' type='submit'>Login</button><br><br>
 </form>
 
 <p class='err' id='loginError' name='loginError'></p>
 
-<p *ngIf='loginAuth.loggedIn'>Already Logged In</p>
+<p *ngIf='loginAuth.loggedIn' class='home-logged-in'>Already Logged In</p>

@@ -1,9 +1,19 @@
-app-enterbudget, app-enterexpense {
+app-enterbudget, app-enterexpense{
   float: left;
-  width: 40%;
+  width: 20%;
   padding: 5%;
 }
 
-app-visualization {
+app-enterbudget{
+  margin-left: 19%;
+  margin-right: 1%;
+}
+
+app-enterexpense{
+  margin-right: 19%;
+  margin-left: 1%;
+}
+
+app-visualization{
   margin: 5%;
 }

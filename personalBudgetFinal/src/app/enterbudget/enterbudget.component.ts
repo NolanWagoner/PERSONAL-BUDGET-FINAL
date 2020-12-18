@@ -59,6 +59,15 @@ export class EnterbudgetComponent implements AfterViewInit {
     //Create table body
     for (var i = 0; i < this.dataSource.titles.length; i++) {
       var tr = document.createElement('tr');
+      if((i%2) == 0){
+        var evenRowAttr = document.createAttribute('class');
+        evenRowAttr.value = 'even-row';
+        tr.setAttributeNode(evenRowAttr);
+      } else{
+        var oddRowAttr = document.createAttribute('class');
+        oddRowAttr.value = 'odd-row';
+        tr.setAttributeNode(oddRowAttr);
+      }
       for (var j = 0; j < 3; j++) {
         var td = document.createElement('td');
         if(j == 0){

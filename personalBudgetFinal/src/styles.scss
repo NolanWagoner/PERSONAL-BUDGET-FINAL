@@ -1,4 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
 html, body {
   height: 100%;
+  margin: 0;
+}
+
+* {
+  font-family: Verdana;
+ }
+
+.err{
+  color: red;
+}
+
+.good{
+  color: lime;
+}
+
+button {
+  text-decoration: none;
+  background-color: #de6a61;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  margin: 10px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+}
+
+button:hover {
+  background-color:  #de6a6190;
+  color: white;
+  cursor: pointer;
+}
+
+input[type=text], input[type=number], input[type=password], select{
+  width: 350px;
+  padding: 10px 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+select{
+  background-color: #f7f8f7;
+}
+
+h1{
+  text-align: center;
+}
+
+table{
+  border-collapse: collapse;
+}
+
+th{
+  padding-bottom: 10px;
+  text-align: left;
+  background-color: #1d3d58;
+  padding: 10px;
+  color: white;
+}
+
+td{
+  padding: 10px;
+  text-align: left;
+}
+
+.odd-row{
+  background-color: #b0a1b450;
+  margin: 0;
+}
+
+input[type=checkbox]{
+  background-color: white;
+  height: 16px;
+  width: 16px;
 }

@@ -1,14 +1,14 @@
-<h2>Enter or View Budget</h2>
+<h2>Budget</h2>
 
 <div id=budgetTable></div>
-<button (click)='delBudget()'>Delete Selected</button>
+<button data-message='Delete checked budget' (click)='delBudget()'>Delete Selected</button><br><br>
 
 <form id='enterBudget'>
-  <label for='budgetTitleInput'>Budget Title/Category: </label>
-  <input type='text' id='budgetTitleInput' name='budgetTitleInput' required='true' form='enterBudget' maxlength='110'>
-  <label for='budgetValueInput'>Budget Value: $</label>
-  <input type='number' id='budgetValueInput' name='budgetValueInput' required='true' form='enterBudget'><br>
-  <button type='reset' id='resetBudgetButton' name='resetBudgetButton'>Reset</button>
-  <button (click)='submitBudget()' id='submitBudgetButton' name='submitBudgetButton'>Add Budget Item</button>
+  <label for='budgetTitleInput'>Budget Title/Category</label><br>
+  <input type='text' id='budgetTitleInput' name='budgetTitleInput' required='true' form='enterBudget' maxlength='110'><br><br>
+  <label for='budgetValueInput'>Budget Value (in dollars)</label><br>
+  <input type='number' id='budgetValueInput' name='budgetValueInput' required='true' form='enterBudget'><br><br>
+  <button data-message='Reset budget form' type='reset' id='resetBudgetButton' name='resetBudgetButton'>Reset</button>
+  <button data-message='Submit budget' (click)='submitBudget()' id='submitBudgetButton' name='submitBudgetButton'>Add Budget Item</button>
 </form>
 <p class='err' id='enterBudgetError' name='enterBudgetError'></p>

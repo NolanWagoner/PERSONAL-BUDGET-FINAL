@@ -1,0 +1,40 @@
+nav{
+  background-color: #1d3d58;
+  left: 0;
+  margin-top: 0;
+  height: 50px;
+  width: 100%;
+  color: white;
+  text-align: left;
+  font-size: 15px;
+}
+
+a{
+  background-color: #1d3d58;
+  border: none;
+  color: white;
+  padding: 16px 15px;
+
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+}
+
+a:hover{
+  background-color:  #de6a61;
+  color: white;
+  cursor: pointer;
+}
+
+.navigate{
+  float: left;
+}
+
+#logout{
+  float: right;
+  margin-right: 20%;
+}
+
+#homepage-link{
+  margin-left: 20%;
+}
